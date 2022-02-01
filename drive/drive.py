@@ -9,10 +9,10 @@ class driveBase:
         self.pwmOutA = PWM(Pin(pwmOutA), 50)
         self.pwmOutB = PWM(Pin(pwmOutB), 50)
 
-        self.digitalOutA1 = Pin(digitalOutA1, Pin.Out)
-        self.digitalOutA2 = Pin(digitalOutA2, Pin.Out)
-        self.digitalOutB1 = Pin(digitalOutB1, Pin.Out)
-        self.digitalOutB2 = Pin(digitalOutB2, Pin.Out)
+        self.digitalOutA1 = Pin(digitalOutA1, Pin.OUT)
+        self.digitalOutA2 = Pin(digitalOutA2, Pin.OUT)
+        self.digitalOutB1 = Pin(digitalOutB1, Pin.OUT)
+        self.digitalOutB2 = Pin(digitalOutB2, Pin.OUT)
 
     def forward(self, speed=1):
         self.pwmOutA.duty_ns(speed * 2000)
