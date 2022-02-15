@@ -11,6 +11,11 @@ import drive
 import network
 from MicroWebSrv2 import *
 
+try:
+  import usocket as socket
+except:
+  import socket
+
 ap = network.WLAN(network.AP_IF)
 ap.active(True)
 ap.config(essid="ICRS101", authmode=3, password="robotics101")
@@ -26,3 +31,19 @@ websocket = MicroWebSrv2.LoadModule('WebSockets')
 websocket.OnWebSocketProtocol = OnWebSocketProtocol
 websocket.OnWebSocketAccepted = OnWebSocketAccepted
 
+
+
+def web_page():
+    with open("control.html") as f:
+        html = f.readlines()
+    return html
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind(('', 80))
+s.listen(5)
+
+while True:
+    conn, addr = s.accept()
+    conn.send('HTTP/1.1 200 OK\n')
+    conn.send('Content-Type: text/html\n')
+    conn.sendall(response)
