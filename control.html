@@ -1,3 +1,43 @@
 <!DOCTYPE html>
 
+<body>
+
+    <button type="button" onclick="onForwardClick">FORWARD</button>
+
+</body>
+
+<script>
+    var wsUri = "ws://" + window.location.hostname + ":81/";
+    let websocket = new WebSocket(wsUri);
+
+    function onForwardClick() {
+        websocket.send({
+            "direction": "forward",
+            "power": 0.8
+        });
+    }
+
+    function onBackClick() {
+        websocket.send({
+            "direction": "back",
+            "power": 0.8
+        });
+    }
+
+    function onLeftClick() {
+        websocket.send({
+            "direction": "left",
+            "power": 0.8
+        })
+    }
+
+    function onRightClick() {
+        websocket.send({
+            "direction": "right",
+            "power": 0.8
+        })
+    }
+
+</script>
+
 </html>

@@ -2,22 +2,26 @@ from machine import Pin
 from machine import PWM
 
 max_duty = 1023
+pwm_frequency = 50000
 
 class driveBase:
     def __init__(self, pwmOutA, pwmOutB, 
             digitalOutA1, digitalOutA2, 
             digitalOutB1, digitalOutB2):
-        self.pwmOutA = PWM(Pin(pwmOutA), 50000)
-        self.pwmOutB = PWM(Pin(pwmOutB), 50000)
+        self.pwmOutA = PWM(Pin(pwmOutA), pwm_frequency)
+        self.pwmOutB = PWM(Pin(pwmOutB), pwm_frequency)
 
         self.digitalOutA1 = Pin(digitalOutA1, Pin.OUT)
         self.digitalOutA2 = Pin(digitalOutA2, Pin.OUT)
         self.digitalOutB1 = Pin(digitalOutB1, Pin.OUT)
         self.digitalOutB2 = Pin(digitalOutB2, Pin.OUT)
 
-    def forward(self, speed=1):
+    def setPower(self, speed=1):
         self.pwmOutA.duty(int(speed * max_duty))
         self.pwmOutB.duty(int(speed * max_duty))
+        
+    def forward(self, speed=1):
+        setPower(speed)
         self.digitalOutA1.on()
         self.digitalOutA2.off()
         self.digitalOutB1.on()
@@ -25,26 +29,21 @@ class driveBase:
 
 
     def back(self, speed=1):
-        self.pwmOutA.duty(int(speed * max_duty))
-        self.pwmOutB.duty(int(speed * max_duty))
+        setPower(speed)
         self.digitalOutA1.off()
         self.digitalOutA2.on()
         self.digitalOutB1.off()
         self.digitalOutB2.on()
     
     def rotateRight(self, speed=1):
-        self.pwmOutA.duty(int(speed * max_duty))
-        self.pwmOutB.duty(int(speed * max_duty))
-        
+        setPower(speed)        
         self.digitalOutA1.on()
         self.digitalOutA2.off()
         self.digitalOutB1.off()
         self.digitalOutB2.on()
 
     def rotateLeft(self, speed=1):
-        self.pwmOutA.duty(int(speed * max_duty))
-        self.pwmOutB.duty(int(speed * max_duty))
-        
+        setPower(speed)
         self.digitalOutA1.off()
         self.digitalOutA2.on()
         self.digitalOutB1.on()
