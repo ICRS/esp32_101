@@ -10,33 +10,59 @@ ap = network.WLAN(network.AP_IF)
 ap.active(True)
 ap.config(essid="ICRS101", authmode=3, password="robotics101")
 
+print(ap.ifconfig())
 
-def OnWebSocketProtocol(microWebSrv2, protocols) :
-    if WS_CHAT_SUB_PROTOCOL in protocols :
-        return WS_CHAT_SUB_PROTOCOL
 
+#def OnWebSocketProtocol(microWebSrv2, protocols) :
+#    if WS_CHAT_SUB_PROTOCOL in protocols :
+#        return WS_CHAT_SUB_PROTOCOL
+
+def OnTextMessage(webSocket, msg):
+    print(msg)
+    webSocket.SendTextMessage("Received")
 
 def OnWebSocketAccepted(microWebSrv2, webSocket) :
-    print('New WebSocket (myGreatChat proto) accepted from %s:%s.' % webSocket.Request.UserAddress)
+
+    print("Received")
+    webSocket.OnTextMessage = OnTextMessage
+    print('Accepted from %s:%s.' % webSocket.Request.UserAddress)
 
 
 websocket = MicroWebSrv2.LoadModule('WebSockets')
-websocket.OnWebSocketProtocol = OnWebSocketProtocol
+#websocket.OnWebSocketProtocol = OnWebSocketProtocol
 websocket.OnWebSocketAccepted = OnWebSocketAccepted
 
+#mws = MicroWebSrv2()
+#mws.RootPath = 'www'
+#mws.NotFoundURL = '/'
+#mws.StartManaged()
 
 def web_page():
-    with open("control.html") as f:
+    with open("www/control.html") as f:
         html = f.read()
+    print(html)
     return html
 
-
+addr = socket.getaddrinfo('0.0.0.0',80)[0][-1]
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(('192.168.4.1', 80))
+s.bind(addr)
 s.listen(5)
+
+webpage = web_page()
+
+addr = socket.getaddrinfo('0.0.0.0', 81)[0][-1]
+dataSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+dataSocket.bind(addr)
+dataSocket.listen(5)
 
 while True:
     conn, addr = s.accept()
+    c, a = dataSocket.accept() 
+    print(addr)
+    conn.recv(1024)
+    c.recv(1024)
     conn.send('HTTP/1.1 200 OK\n')
     conn.send('Content-Type: text/html\n')
-    conn.sendall(response)
+    conn.send('Connection: close\n\n')
+    conn.sendall(webpage)
+    conn.close()
