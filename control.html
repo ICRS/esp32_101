@@ -7,35 +7,27 @@
 </body>
 
 <script>
-    var wsUri = "ws://" + window.location.hostname + ":81/";
-    let websocket = new WebSocket(wsUri);
+    // var wsUri = "ws://" + window.location.hostname + ":81/";
+    // let websocket = new WebSocket(wsUri);
 
     function onForwardClick() {
-        websocket.send({
-            "direction": "forward",
-            "power": 0.8
-        });
+        sendValue("forward", 0.8);
     }
 
     function onBackClick() {
-        websocket.send({
-            "direction": "back",
-            "power": 0.8
-        });
+        sendValue("backward", 0.8);
     }
 
     function onLeftClick() {
-        websocket.send({
-            "direction": "left",
-            "power": 0.8
-        })
     }
 
     function onRightClick() {
-        websocket.send({
-            "direction": "right",
-            "power": 0.8
-        })
+    }
+
+    function sendValue(direction, power){
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "?" + direction + power,true);
+        xhttp.send();
     }
 
 </script>

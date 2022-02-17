@@ -2,7 +2,6 @@
 #import esp
 #esp.osdebug(None)
 
-import drive
 
 #import webrepl
 #webrepl.start(password="icrs101")
