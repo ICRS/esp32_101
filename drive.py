@@ -28,7 +28,7 @@ class driveBase:
         self.digitalOutB2.off()
 
 
-    def back(self, speed=1):
+    def backward(self, speed=1):
         self.setPower(speed)
         self.digitalOutA1.off()
         self.digitalOutA2.on()

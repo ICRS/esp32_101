@@ -2,7 +2,10 @@
 
 <body>
 
-    <button type="button" onclick="onForwardClick">FORWARD</button>
+    <button type="button" onclick="onForwardClick()">FORWARD</button>
+    <button type="button" onclick="onBackClick()">BACKWARD</button>
+    <button type="button" onclick="onLeftClick()">LEFT</button>
+    <button type="button" onclick="onRightClick()">RIGHT</button>
 
 </body>
 
@@ -19,14 +22,16 @@
     }
 
     function onLeftClick() {
+        sendValue("left", 0.8);
     }
 
     function onRightClick() {
+        sendValue("right", 0.8);
     }
 
     function sendValue(direction, power){
         var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "?" + direction + power,true);
+        xhttp.open("POST", "?" + direction + "=" + power,true);
         xhttp.send();
     }
 

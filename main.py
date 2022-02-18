@@ -1,5 +1,5 @@
 import network
-from MicroWebSrv2 import *
+# from MicroWebSrv2 import *
 import drive
 
 try:
@@ -33,7 +33,7 @@ ap.config(essid="ICRS101", authmode=3, password="robotics101")
 #mws.StartManaged()
 
 def web_page():
-    with open("www/control.html") as f:
+    with open("web/control.html") as f:
         html = f.read()
     print(html)
     return html
@@ -60,8 +60,16 @@ while True:
     print('Request = %s' % request)
     if("forward" in request):
         driveBase.forward(0.8)
+        print("forward")
     elif("backward" in request):
         driveBase.backward(0.8)
+        print("backward")
+    elif("left" in request):
+        driveBase.rotateLeft(0.8)
+        print("left")
+    elif("right" in request):
+        driveBase.rotateRight(0.8)
+        print("right")
     else:
         driveBase.forward(0)
 
