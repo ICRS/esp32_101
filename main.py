@@ -59,11 +59,11 @@ while True:
     request = str(request)
     print('Request = %s' % request)
     if("forward" in request):
-        drive.forward(0.8)
+        driveBase.forward(0.8)
     elif("backward" in request):
-        drive.backward(0.8)
+        driveBase.backward(0.8)
     else:
-        drive.forward(0)
+        driveBase.forward(0)
 
     conn.send('HTTP/1.1 200 OK\n')
     conn.send('Content-Type: text/html\n')
