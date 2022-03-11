@@ -19,17 +19,38 @@ class driveBase:
         self.digitalOutB1 = Pin(digitalOutB1, Pin.OUT)
         self.digitalOutB2 = Pin(digitalOutB2, Pin.OUT)
 
+    def __getDuty(self, speed):
+        return int(abs(speed) * max_duty)
+
     def setPower(self, speed):
-        self.pwmOutA.duty(int(speed * max_duty))
-        self.pwmOutB.duty(int(speed * max_duty))
+        duty = self.__getDuty(speed)
+        self.pwmOutA.duty(duty)
+        self.pwmOutB.duty(duty)
         
+    def setLeft(self, speed):
+        self.pwmOutA.duty(self.__getDuty(speed))
+        if(speed >= 0):
+            self.digitalOutA1.on()
+            self.digitalOutA2.off()
+        else:
+            self.digitalOutA1.off()
+            self.digitalOutA2.on()
+
+    def setRight(self, speed):
+        self.pwmOutB.duty(self.__getDuty(speed))
+        if(speed >= 0):
+            self.digitalOutB1.on()
+            self.digitalOutB2.off()
+        else:
+            self.digitalOutB1.off()
+            self.digitalOutB2.on()
+
     def forward(self, speed=1):
         self.setPower(speed)
         self.digitalOutA1.on()
         self.digitalOutA2.off()
         self.digitalOutB1.on()
         self.digitalOutB2.off()
-
 
     def backward(self, speed=1):
         self.setPower(speed)

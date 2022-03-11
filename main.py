@@ -50,7 +50,7 @@ webpage = web_page()
 # dataSocket.bind(addr)
 # dataSocket.listen(5)
 
-driveBase = drive.driveBase(25,13,26,27,14,12)
+driveBase = drive.driveBase(16,13,5,4,12,14)
 
 while True:
     conn, addr = s.accept()
