@@ -1,5 +1,8 @@
 from machine import Pin
 from machine import PWM
+import machine
+
+import time
 
 max_duty = 1023
 pwm_frequency = 50000
@@ -48,3 +51,34 @@ class driveBase:
         self.digitalOutA2.on()
         self.digitalOutB1.on()
         self.digitalOutB2.off()
+
+    def initLeftSensor(self, trig, echo):
+        self.leftUltraSound = UltraSoundSensor(trig, echo)
+
+    def initRightSensor(self, trig, echo):
+        self.rightUltraSound = UltraSoundSensor(trig, echo)
+
+    def getLeftDistance(self):
+        return self.leftUltraSound.getDistance()
+
+    def getRightDistance(self):
+        return self.rightUltraSound.getDistance()
+
+class UltraSoundSensor:
+    def __init__(self, trig, echo):
+        self.trig = Pin(trig, Pin.OUT)
+        self.echo = Pin(echo, Pin.IN)
+
+    def getDistance(self):
+        self.trig.value(0)
+        time.sleep_us(5)
+        self.trig.value(1)
+        time.sleep_us(10)
+        self.trig.value(0)
+
+        try:
+            pulse = machine.time_pulse_us(self.echo, 1, 500*2*30)
+            return pulse * 100 / 582 
+        except OSError as ex:
+            raise OSError("OUT OF RANGE")
+
