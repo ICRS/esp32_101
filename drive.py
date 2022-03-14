@@ -7,7 +7,7 @@ import time
 max_duty = 1023
 pwm_frequency = 50000
 
-class driveBase:
+class DriveBase:
     def __init__(self, pwmOutA, pwmOutB, 
             digitalOutA1, digitalOutA2, 
             digitalOutB1, digitalOutB2):

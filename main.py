@@ -11,27 +11,6 @@ ap = network.WLAN(network.AP_IF)
 ap.active(True)
 ap.config(essid="ICRS101", authmode=3, password="robotics101")
 
-# print(ap.ifconfig())
-#
-# def OnTextMessage(webSocket, msg):
-#     print(msg)
-#     webSocket.SendTextMessage("Received")
-#
-# def OnWebSocketAccepted(microWebSrv2, webSocket) :
-#     print("Received")
-#     webSocket.OnTextMessage = OnTextMessage
-#     print('Accepted from %s:%s.' % webSocket.Request.UserAddress)
-
-
-# websocket = MicroWebSrv2.LoadModule('WebSockets')
-#websocket.OnWebSocketProtocol = OnWebSocketProtocol
-# websocket.OnWebSocketAccepted = OnWebSocketAccepted
-
-#mws = MicroWebSrv2()
-#mws.RootPath = 'www'
-#mws.NotFoundURL = '/'
-#mws.StartManaged()
-
 def web_page():
     with open("web/control.html") as f:
         html = f.read()
@@ -45,12 +24,7 @@ s.listen(5)
 
 webpage = web_page()
 
-# addr = socket.getaddrinfo('0.0.0.0', 81)[0][-1]
-# dataSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# dataSocket.bind(addr)
-# dataSocket.listen(5)
-
-driveBase = drive.driveBase(16,13,5,4,12,14)
+driveBase = drive.DriveBase(16,13,5,4,12,14)
 
 while True:
     conn, addr = s.accept()
