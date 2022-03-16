@@ -19,7 +19,7 @@ def web_page():
 addr = socket.getaddrinfo('0.0.0.0',80)[0][-1]
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(addr)
-s.listen(5)
+s.listen(1)
 
 webpage = web_page()
 
@@ -31,20 +31,11 @@ while True:
     request = conn.recv(1024)
     request = str(request)
     print('Request = %s' % request)
+
+    # handle requests
     if("forward" in request):
         driveBase.forward(0.8)
         print("forward")
-    elif("backward" in request):
-        driveBase.backward(0.8)
-        print("backward")
-    elif("left" in request):
-        driveBase.rotateLeft(0.8)
-        print("left")
-    elif("right" in request):
-        driveBase.rotateRight(0.8)
-        print("right")
-    else:
-        driveBase.forward(0)
 
     conn.send('HTTP/1.1 200 OK\n')
     conn.send('Content-Type: text/html\n')
