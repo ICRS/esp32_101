@@ -7,13 +7,11 @@
     <button type="button" onclick="onLeftClick()">LEFT</button>
     <button type="button" onclick="onRightClick()">RIGHT</button>
 
-    <button type="button" onclick="onStopClick()">LEFT</button>
+    <button type="button" onclick="onStopClick()">STOP</button>
 
 </body>
 
 <script>
-    // var wsUri = "ws://" + window.location.hostname + ":81/";
-    // let websocket = new WebSocket(wsUri);
 
     function onForwardClick() {
         sendValue("forward", 0.8);
@@ -32,7 +30,7 @@
     }
 
     function onStopClick() {
-        sendValue("forward", 0);
+        sendValue("stop", 0.0);
     }
 
     function sendValue(direction, power){

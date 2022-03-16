@@ -1,5 +1,4 @@
 import network
-# from MicroWebSrv2 import *
 import drive
 
 try:

@@ -2,9 +2,7 @@
 #import esp
 #esp.osdebug(None)
 
-
 #import webrepl
 #webrepl.start(password="icrs101")
 
-#from network import WLAN
 
